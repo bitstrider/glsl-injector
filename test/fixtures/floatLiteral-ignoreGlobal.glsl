@@ -1,3 +1,5 @@
+#define PI 3.14
+//this is a comment
 precision mediump float;
 uniform vec2 iResolution;
 

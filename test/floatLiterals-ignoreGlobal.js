@@ -10,15 +10,18 @@ tap.test("injector on float literals, ignoring globals", function (t) {
     const streamIn = fs.createReadStream('test/fixtures/test-in.glsl')
     const streamOut = fs.createWriteStream('test/fixtures/test-out.glsl')
 
+    let depth = 0;
     const onToken = token => {
-        //TODO: change this to ignore float literals in global scope
-        if (token.type=='float') {
-            token.data = '1.0'; //replace all float literals with the value 1.0
-        }
-    }
 
-    const onAST = ast => {
-        //🔥🔥🔥
+        if(token.type=='operator') {
+            if(token.data == '{') {
+                depth++
+            }else if(token.data == '}') {
+                depth--
+            }
+        }else if(depth>0 && token.type=='float') {
+            token.data = '1.0'; //replace float literals with the value 1.0
+        }
     }
 
     const onEnd = () => {
@@ -31,6 +34,6 @@ tap.test("injector on float literals, ignoring globals", function (t) {
         t.end();
     }
 
-    injector({streamIn, streamOut, onToken, onAST, onEnd})
+    injector({streamIn, streamOut, onToken, onEnd})
 
 })

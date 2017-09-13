@@ -10,7 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "glsl-deparser": "^1.0.0",
-    "glsl-parser": "^2.0.0"
+    "glsl-detokenizer": "^1.0.0",
+    "glsl-parser": "^2.0.0",
+    "glsl-tokenizer": "^2.1.2"
   },
   "devDependencies": {
     "tap": "^10.7.0"
